@@ -51,8 +51,8 @@
 			var mouseX, mouseY;
 			var counter = 1;
 			onmousemove = function (e) {
-				document.body.style.backgroundPositionX = e.pageX/20+"px";
-				document.getElementsByTagName("html")[0].style.backgroundPositionY = -e.pageY/10+"px";
+				document.body.style.backgroundPosition = e.pageX/10+"px "+e.pageY/10+"px" ;
+				document.getElementsByTagName("html")[0].style.backgroundPosition = -e.pageX/20+"px "+-e.pageY/20+"px";
 				mouseX = e.pageX;
 				mouseY = e.pageY;
 				//addCircle();
