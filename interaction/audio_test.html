@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <script>
+      navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+      window.URL = window.URL || window.webkitURL;
+
+      function gotStream(stream) {
+        var audio = document.querySelector('audio');
+        if (window.URL) {
+          audio.src = window.URL.createObjectURL(stream);
+          } else {
+          audio.src = stream; // Opera.
+        }
+
+        audio.onerror = function(e) {
+          stream.stop();
+        };
+
+        stream.onended = noStream;
+
+        audio.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
+          console.log("wut");
+        };
+
+        // Since audio.onloadedmetadata isn't firing for getUserMedia audio, we have
+        // to fake it.
+        setTimeout(function() {
+          console.log("wut");
+        }, 50);
+      }
+
+      function noStream(e) {
+        var msg = 'No camera available.';
+        if (e.code == 1) {
+          msg = 'User denied access to use camera.';
+        }
+        console.log(msg);
+      }
+
+      function init() {
+        if (!navigator.getUserMedia) {
+          document.getElementById('errorMessage').innerHTML = 'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+          return;
+        }
+        navigator.getUserMedia({audio: true}, gotStream, noStream);
+      }
+
+      window.addEventListener('keydown', function(e) {
+        if (e.keyCode == 27) { // ESC
+          document.querySelector('details').open = false;
+        }
+      }, false);
+
+      window.onload = init;
+
+    </script>
+    <body>
+      <audio autoplay></audio>
+    </body>
+  </html>
