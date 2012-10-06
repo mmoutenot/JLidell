@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Stripe Test</title>
+		<style>
+			body {
+				background-image:
+    				-webkit-gradient(linear, 0% 0%, 100% 100%,
+    				from(transparent),
+				    color-stop(0.25, transparent), 
+				    color-stop(0.25, black),
+				    color-stop(0.50, black),
+				    color-stop(0.50, transparent),
+				    color-stop(0.85, transparent),
+				    color-stop(0.85, black), 
+				    to(black));
+				    ffbackground-color: blue;
+				height: 100%;
+				width: 100%;
+			    margin: 0;
+			    -webkit-background-size:10px;
+			}
+			html {
+				background-image:
+    				-webkit-gradient(linear, 100% 0%, 0% 100%,
+    				from(transparent),
+				    color-stop(0.25, transparent), 
+				    color-stop(0.25, black),
+				    color-stop(0.50, black),
+				    color-stop(0.50, transparent),
+				    color-stop(0.85, transparent),
+				    color-stop(0.85, black), 
+				    to(black));
+
+				    ffbackground-color: blue;
+				height: 100%;
+				width: 100%;
+				margin: 0;
+			    -webkit-background-size:10px;
+			}
+		</style>
+		<script type="text/javascript">
+			var Circle = function (x,y,r,color) {
+				this.x = x;
+				this.y = y;
+				this.r = r;
+				this.color = color;
+			}
+			var circles = [];
+			var curColor = "black";
+			var mouseX, mouseY;
+			var counter = 1;
+			onmousemove = function (e) {
+				document.body.style.backgroundPositionX = e.pageX/20+"px";
+				document.getElementsByTagName("html")[0].style.backgroundPositionY = -e.pageY/10+"px";
+				mouseX = e.pageX;
+				mouseY = e.pageY;
+				//addCircle();
+			}
+			addCircle = function () {
+				counter++;
+				if (mouseX && !(counter%2)) {
+					circle = new Circle(mouseX,mouseY,1,curColor);
+					//curColor = (curColor=="black")?"white":"black";
+					circles.push(circle);
+				}
+			}
+			draw = function(e) {
+				//console.log("Hey");
+		        var canvas = document.getElementById("can");
+		        canvas.width = window.innerWidth;
+            	canvas.height = window.innerHeight;
+		        var context = canvas.getContext("2d");
+		        for (i=0;i<circles.length;i++) {
+		        	circle = circles[i];
+			        context.beginPath();
+			        context.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI, false);
+			        context.fillStyle = circle.color;
+			        //context.fill();
+			        context.strokeStyle = circle.color;
+			        context.stroke();
+			        context.lineWidth = 3;
+			        circle.r += (20-circle.r)/10;			        
+		    	}
+		    	/*if (circles.length>0) {
+		    		console.log(circles.shift());
+		    		//while (circles.shift().r>9);
+		    	}*/
+		    	while (circles.length>0 && circles[0].r>19.5)
+		    		circles.shift();
+		    };
+		    setInterval(draw,20);
+		    //setInterval(addCircle,300);
+		</script>
+	</head>
+	<body style="background-position-x: 12.05px; ">
+		<div id="" width="" height="" style="
+    background: rgba(125, 125, 125, .8);
+    padding: 30px;
+    width: 350px;
+    tab-size: auto;
+    text-align: center;
+    margin: auto;
+    font-size: 80px;
+    margin-top: 40px;
+    position: absolute;
+    font-family: Cooper Black;
+">Jamie Lidell</div>
+	
+</body></html>
