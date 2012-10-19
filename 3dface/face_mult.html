@@ -12,7 +12,7 @@
             }
 
             #blueCanvas {
-                display:none;
+//                display:none;
             }
 
             #resultCanvas {
@@ -20,11 +20,14 @@
             }
 
             #redImg {
-                display:none;
+                width:500px;
+                height:393px;
             }
 
             #blueImg{
-                display:none;
+//                display:none;
+                width:500px;
+                height:393px;
             }
 
         </style>
@@ -43,28 +46,32 @@
                 //** private functions **//
 
                 // takes in name of the canvas to be created
-                function createCanvas(name, canvas, image) {
-                    canvas = document.createElement(name);
+                function createCanvas(image) {
+                    var canvas = document.createElement("canvas");
 
                     // always using redImage because the images should be the
                     // height anyway
-                    canvas.width = redImage.width;
-                    canvas.height = redImage.height;
+                    canvas.width = redImage.clientWidth;
+                    canvas.height = redImage.clientHeight;
 
                     image.parentNode.insertBefore(canvas, image);
                     // no canvas support?
                     if (!canvas.getContext) { return; }
 
+                    return canvas;
                 }
 
                 function draw() {
-                    var context, context2, imgData, imgData2, pix,
-                    w = redImage.width,
-                    h = blueImage.height;
+                    var pix;
+                    console.log(redImage);
+                    var w = redImage.clientWidth;
+                    var h = redImage.clientHeight;
+                    console.log("writing image of (height,width): " + h + " " + w);
                     // get 2d context
                     contextRed  = canvasRed.getContext('2d');
                     contextRed.drawImage(redImage, 0, 0);
                     redData = contextRed.getImageData(0,0,w,h);
+                    console.log(redData);
                     pix = redData.data; // project the blue pixels onto the red pixels
 
                     contextBlue = canvasBlue.getContext('2d');
@@ -80,11 +87,11 @@
                         // pix[i+3] is alpha channel (ignored)
 
                         // another check to see if image is still empty
-                        if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
-                            canvas.parentNode.removeChild(canvas);
-                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
-                            return false;
-                        }
+//                        if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
+//                            canvas.parentNode.removeChild(canvas);
+//                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
+//                            return false;
+//                        }
                     }
                     // Draw the result on the canvas
                     contextRed.putImageData(redData, 0, 0);
@@ -100,15 +107,18 @@
                 //** public functions **//
                 return {
                     init : function(redId, blueId) {
+                        console.log("multiply filter with " + redId + " " + blueId);
                         redImage = document.getElementById(redId);
                         blueImage = document.getElementById(blueId);
 
                         // lauch the draw function as soon as the image is loaded
-                        if(redImage && redImage.clientWidth > 50 && blueImage && blueImage.clientWidth > 50) { // images loaded
-                            createCanvas("canvasRed", canvasRed, redImage);
-                            createCanvas("canvasBlue", canvasBlue, blueImage);
+                        if(redImage && blueImage) { // images loaded
+                            console.log("Images ready");
+                            canvasRed = createCanvas(redImage);
+                            canvasBlue = createCanvas(blueImage);
                             draw();
                         } else { // not yet ready
+                            console.log("Images not ready");
                             setTimeout(function() { multiplyFilter.init("redImg", "blueImg"); }, 1000);
                         }
                     }
