@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
     <head>
@@ -6,94 +5,89 @@
     <body>
 
         <style type="text/css">
-            #main div {
-                margin-right: 15px;
-            }
-
-            .dfirst {
-                float: left;
-            }
-
-            .dsecond {position: relative; float: left;}
-
-            #dtop {
-                position: relative;
-                float: left;
-            }
-
-            #dtop canvas {
-                position: absolute;
+            #redCanvas {
+                position:absolute;
                 top: 0;
-                left: 0;
+                left:0;
+            }
+
+            #blueCanvas {
+                display:none;
+            }
+
+            #resultCanvas {
+                position:absolute;
+            }
+
+            #redImg {
+                display:none;
+            }
+
+            #blueImg{
+                display:none;
             }
 
         </style>
 
-        <div class="dfirst">
-            <img src="red.png" alt=""><br>
-            Original image
-        </div>
-
-
-        <div class="dsecond">
-            <img src="blue.png" alt=""><br>
-            Simple CSS opacity at 50%
-        </div>
-
-        <div id="dtop">
-            <img src="red.png" alt="" id="base"><br>
-            Multiply filter
-        </div>
+        <img src="red_s.png" alt="red_source" id="redImg">
+        <img src="blue_s.png" alt="blue_source" id="blueImg">
 
         <script>
 
             var multiplyFilter = (function() {
 
                 //** private vars **//
-                var multiplyColor,
-                imageBottom, imageId,
-                canvas;
+                var canvasRed, canvasBlue;
+                var redImage, blueImage;
 
                 //** private functions **//
 
-                function createCanvas() {
-                    canvas = document.createElement('canvas');
-                    canvas.width = imageBottom.width;
-                    canvas.height = imageBottom.height;
-                    imageBottom.parentNode.insertBefore(canvas, imageBottom);
+                // takes in name of the canvas to be created
+                function createCanvas(name, canvas, image) {
+                    canvas = document.createElement(name);
+
+                    // always using redImage because the images should be the
+                    // height anyway
+                    canvas.width = redImage.width;
+                    canvas.height = redImage.height;
+
+                    image.parentNode.insertBefore(canvas, image);
                     // no canvas support?
                     if (!canvas.getContext) { return; }
 
-                    draw();
                 }
 
                 function draw() {
-                    var context, imgData, pix,
-                    w = imageBottom.width,
-                    h = imageBottom.height;
+                    var context, context2, imgData, imgData2, pix,
+                    w = redImage.width,
+                    h = blueImage.height;
                     // get 2d context
-                    context = canvas.getContext('2d');
-                    // draw the image on the canvas
-                    context.drawImage(imageBottom, 0, 0);
-                    // Get the CanvasPixelArray from the given coordinates and dimensions.
-                    imgData = context.getImageData(0, 0, w, h);
-                    pix = imgData.data;
+                    contextRed  = canvasRed.getContext('2d');
+                    contextRed.drawImage(redImage, 0, 0);
+                    redData = contextRed.getImageData(0,0,w,h);
+                    pix = redData.data; // project the blue pixels onto the red pixels
+
+                    contextBlue = canvasBlue.getContext('2d');
+                    contextBlue.drawImage(blueImage, 0, 0);
+                    blueData = contextBlue.getImageData(0,0,w,h);
+                    bluePixels = blueData.data;
+
                     // Loop over each pixel and change the color.
                     for (var i = 0, n = pix.length; i < n; i += 4) {
-                        pix[i ] = multiplyPixels(multiplyColor[0], pix[i ]); // red
-                        pix[i+1] = multiplyPixels(multiplyColor[1], pix[i+1]); // green
-                        pix[i+2] = multiplyPixels(multiplyColor[2], pix[i+2]); // blue
+                        pix[i  ] = multiplyPixels(bluePixels[i  ], pix[i  ]); // red
+                        pix[i+1] = multiplyPixels(bluePixels[i+1], pix[i+1]); // green
+                        pix[i+2] = multiplyPixels(bluePixels[i+2], pix[i+2]); // blue
                         // pix[i+3] is alpha channel (ignored)
 
                         // another check to see if image is still empty
                         if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
                             canvas.parentNode.removeChild(canvas);
-                            setTimeout(function() { multiplyFilter.init(imageId, multiplyColor); }, 500);
+                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
                             return false;
                         }
                     }
                     // Draw the result on the canvas
-                    context.putImageData(imgData, 0, 0);
+                    contextRed.putImageData(redData, 0, 0);
                 }
 
                 //** helper function **//
@@ -105,22 +99,23 @@
 
                 //** public functions **//
                 return {
-                    init : function(imgId, color) {
-                        imageId = imgId;
-                        imageBottom = document.getElementById(imageId);
-                        multiplyColor = color;
+                    init : function(redId, blueId) {
+                        redImage = document.getElementById(redId);
+                        blueImage = document.getElementById(blueId);
 
                         // lauch the draw function as soon as the image is loaded
-                        if(imageBottom && imageBottom.clientWidth > 50) { // image loaded
-                            createCanvas();
-                            } else { // not yet ready
-                            setTimeout(function() { multiplyFilter.init(imageId, color); }, 1000);
+                        if(redImage && redImage.clientWidth > 50 && blueImage && blueImage.clientWidth > 50) { // images loaded
+                            createCanvas("canvasRed", canvasRed, redImage);
+                            createCanvas("canvasBlue", canvasBlue, blueImage);
+                            draw();
+                        } else { // not yet ready
+                            setTimeout(function() { multiplyFilter.init("redImg", "blueImg"); }, 1000);
                         }
                     }
                 }
             })();
 
-            multiplyFilter.init('base', [255, 105, 0]);
+            multiplyFilter.init("redImg", "blueImg");
 
         </script>
     </body>
