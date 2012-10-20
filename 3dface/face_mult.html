@@ -37,8 +37,8 @@
             var multiplyFilter = (function() {
 
                 //** private vars **//
-                var canvasRed, canvasBlue;
-                var redImage, blueImage;
+                var canvasRed, canvasBlue, canvasYellow;
+                var redImage, blueImage, yellowImage;
 
                 //** private functions **//
 
@@ -74,11 +74,16 @@
                     blueData = contextBlue.getImageData(0,0,w,h);
                     bluePixels = blueData.data;
 
+                    contextYellow = canvasYellow.getContext('2d');
+                    contextYellow.drawImage(yellowImage, 0, 0);
+                    yellowData = contextYellow.getImageData(0,0,w,h);
+                    yellowPixels = yellowData.data;
+
                     // Loop over each pixel and change the color.
                     for (var i = 0, n = pix.length; i < n; i += 4) {
-                        pix[i  ] = multiplyPixels(bluePixels[i  ], pix[i  ]); // red
-                        pix[i+1] = multiplyPixels(bluePixels[i+1], pix[i+1]); // green
-                        pix[i+2] = multiplyPixels(bluePixels[i+2], pix[i+2]); // blue
+                        pix[i  ] = multiplyPixels(yellowPixels[i  ], multiplyPixels(bluePixels[i  ], pix[i  ])); // red
+                        pix[i+1] = multiplyPixels(yellowPixels[i+1], multiplyPixels(bluePixels[i+1], pix[i+1])); // green
+                        pix[i+2] = multiplyPixels(yellowPixels[i+2], multiplyPixels(bluePixels[i+2], pix[i+2])); // blue
                         // pix[i+3] is alpha channel (ignored)
 
                         // another check to see if image is still empty
@@ -105,12 +110,16 @@
                         console.log("multiply filter with " + redId + " " + blueId);
                         redImage = document.getElementById(redId);
                         blueImage = document.getElementById(blueId);
+                        yellowImage = document.getElementById(yellowId);
 
                         // lauch the draw function as soon as the image is loaded
-                        if(redImage && redImage.clientWidth > 50 && blueImage && blueImage.clientWidth > 50) { // images loaded
+                        if(redImage    && redImage.clientWidth > 50  &&
+                           blueImage   && blueImage.clientWidth > 50 &&
+                           yellowImage && yellowImage.clientWidth >50) { // images loaded
                             console.log("Images ready");
                             canvasRed = createCanvas(redImage);
                             canvasBlue = createCanvas(blueImage);
+                            canvasYellow = createCanvas(yellowImage);
                             draw();
                         } else { // not yet ready
                             console.log("Images not ready");
