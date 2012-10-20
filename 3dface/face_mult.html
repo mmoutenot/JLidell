@@ -124,17 +124,17 @@
                     var h = redImage.clientHeight;
                     // get 2d context
                     contextRed = canvasRed.getContext('2d');
-                    contextRed.drawImage(redImage, 0, 0);
+                    contextRed.drawImage(redImage, x, y);
                     redData = contextRed.getImageData(0,0,w,h);
                     pix = redData.data; // project the blue pixels onto the red pixels
 
                     contextBlue = canvasBlue.getContext('2d');
-                    contextBlue.drawImage(blueImage, x, y);
+                    contextBlue.drawImage(blueImage, 0, 0);
                     blueData = contextBlue.getImageData(0,0,w,h);
                     bluePixels = blueData.data;
 
                     contextYellow = canvasYellow.getContext('2d');
-                    contextYellow.drawImage(yellowImage, x*1.2, y*1.2);
+                    contextYellow.drawImage(yellowImage, 0, 0);
                     yellowData = contextYellow.getImageData(0,0,w,h);
                     yellowPixels = yellowData.data;
 
