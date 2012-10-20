@@ -140,6 +140,7 @@
 
             onmousemove = function (e) {
                 var mid = window.innerWidth;
+                console.log("mid: " + mid + " | " + mid-(e.pageX/200));
                 multiplyFilter.update(mid - (e.pageX/200), (e.pageY/200));
             }
 
