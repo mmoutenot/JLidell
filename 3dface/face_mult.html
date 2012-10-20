@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     </head>
     <body>
 
@@ -20,14 +21,10 @@
             }
 
             #redImg {
-                width:500px;
-                height:393px;
             }
 
             #blueImg{
 //                display:none;
-                width:500px;
-                height:393px;
             }
 
         </style>
@@ -63,15 +60,13 @@
 
                 function draw() {
                     var pix;
-                    console.log(redImage);
                     var w = redImage.clientWidth;
                     var h = redImage.clientHeight;
                     console.log("writing image of (height,width): " + h + " " + w);
                     // get 2d context
-                    contextRed  = canvasRed.getContext('2d');
+                    contextRed = canvasRed.getContext('2d');
                     contextRed.drawImage(redImage, 0, 0);
                     redData = contextRed.getImageData(0,0,w,h);
-                    console.log(redData);
                     pix = redData.data; // project the blue pixels onto the red pixels
 
                     contextBlue = canvasBlue.getContext('2d');
@@ -87,11 +82,11 @@
                         // pix[i+3] is alpha channel (ignored)
 
                         // another check to see if image is still empty
-//                        if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
-//                            canvas.parentNode.removeChild(canvas);
-//                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
-//                            return false;
-//                        }
+                        if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
+                            canvas.parentNode.removeChild(canvas);
+                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
+                            return false;
+                        }
                     }
                     // Draw the result on the canvas
                     contextRed.putImageData(redData, 0, 0);
@@ -112,7 +107,7 @@
                         blueImage = document.getElementById(blueId);
 
                         // lauch the draw function as soon as the image is loaded
-                        if(redImage && blueImage) { // images loaded
+                        if(redImage && redImage.clientWidth > 50 && blueImage && blueImage.clientWidth > 50) { // images loaded
                             console.log("Images ready");
                             canvasRed = createCanvas(redImage);
                             canvasBlue = createCanvas(blueImage);
@@ -125,7 +120,9 @@
                 }
             })();
 
-            multiplyFilter.init("redImg", "blueImg");
+            jQuery(function() {
+                    multiplyFilter.init("redImg", "blueImg");
+            });
 
         </script>
     </body>
