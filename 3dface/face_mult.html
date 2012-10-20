@@ -4,7 +4,16 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <style type="text/css">
 
+            html{
+                height:100%;
+                margin:0;
+                padding:0;
+            }
+
             body {
+                height:100%;
+                margin:0;
+                padding:0;
             }
 
             #stripe {
@@ -12,6 +21,7 @@
                 background-image: -webkit-linear-gradient(transparent 50%,
                 rgba(255,255,255,1.0) 50%);
                 background-size: 100px 80px;
+                height:100%;
             }
 
             #container {
@@ -19,6 +29,8 @@
                 background-image: -webkit-linear-gradient(transparent 50%,
                 rgba(0,0,0,1.0) 50%);
                 background-size: 100px 80px;
+                height:100%;
+                opacity:0.4;
             }
 
             #redCanvas {
@@ -57,24 +69,25 @@
             }
 
             h1 {
-                font-size:100px;
+                font-size:200px;
                 -webkit-background-clip: text;
                 -moz-background-clip: text;
                 background-clip:text;
-
                 color: transparent;
+                z-index:5;
             }
 
         </style>
 
     </head>
-    <body class="stripe">
-
-        <div id="container">
-            <h1 class="stripe">JAMIE LIDELL</h1>
-            <img src="red_whitebg_s.png" alt="red_source" id="redImg">
-            <img src="blue_whitebg_s.png" alt="blue_source" id="blueImg">
-            <img src="yellow_whitebg_s.png" alt="yellow_source" id="yellowImg">
+    <body>
+        <div id="stripe">
+            <div id="container">
+                <h1 class="stripe">JAMIE LIDELL</h1>
+                <img src="red_whitebg_s.png" alt="red_source" id="redImg">
+                <img src="blue_whitebg_s.png" alt="blue_source" id="blueImg">
+                <img src="yellow_whitebg_s.png" alt="yellow_source" id="yellowImg">
+            </div>
         </div>
 
         <script>
