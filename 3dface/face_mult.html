@@ -219,9 +219,9 @@
                     mouseStartX = e.pageX;
                     mouseStartY = e.pageY;
                 }
-                container.style.backgroundPositionY = mouseStart-e.pageX+"px";
-                stripe.style.backgroundPositionY = (mouseStart-e.pageY)+"px";
-                h1.style.backgroundPositionY = (mouseStart-e.pageY)+"px";
+                container.style.backgroundPositionY = mouseStartX-e.pageX+"px";
+                stripe.style.backgroundPositionY = (mouseStartY-e.pageY)+"px";
+                h1.style.backgroundPositionY = (mouseStartY-e.pageY)+"px";
 
                 multiplyFilter.update((e.pageX - (width/2)) / 200, (e.pageY - (height/2)) / 200);
             }
