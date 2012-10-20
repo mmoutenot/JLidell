@@ -16,7 +16,7 @@
                 padding:0;
             }
 
-            #stripe {
+            .stripe {
                 background-color: black;
                 background-image: -webkit-linear-gradient(transparent 50%,
                 rgba(255,255,255,1.0) 50%);
@@ -25,12 +25,11 @@
             }
 
             #container {
-                background-color: white;
+                background-color: black;
                 background-image: -webkit-linear-gradient(transparent 50%,
-                rgba(0,0,0,1.0) 50%);
+                rgba(255,255,255,1.0) 50%);
                 background-size: 100px 80px;
                 height:100%;
-                opacity:0.4;
             }
 
             #redCanvas {
@@ -69,19 +68,22 @@
             }
 
             h1 {
-                font-size:200px;
+                margin:0;
+                padding:0;
+                font-size:150px;
                 -webkit-background-clip: text;
                 -moz-background-clip: text;
                 background-clip:text;
                 color: transparent;
                 z-index:5;
+                font-family:Helvetica;
             }
 
         </style>
 
     </head>
     <body>
-        <div id="stripe">
+        <div class="stripe">
             <div id="container">
                 <h1 class="stripe">JAMIE LIDELL</h1>
                 <img src="red_whitebg_s.png" alt="red_source" id="redImg">
@@ -208,9 +210,9 @@
             var height= viewport_dims.height;
 
             onmousemove = function (e) {
+                document.getElementById("container").style.backgroundPositionY = e.pageX/20+"px";
                 multiplyFilter.update((e.pageX - (width/2)) / 200, (e.pageY - (height/2)) / 200);
             }
-
 
         </script>
     </body>
