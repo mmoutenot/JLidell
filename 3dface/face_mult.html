@@ -8,7 +8,7 @@
                 background-color: black;
                 background-image: -webkit-linear-gradient(transparent 50%,
                 rgba(255,255,255,1.0) 50%);
-                background-size: 100px 100px;
+                background-size: 100px 80px;
             }
 
             #redCanvas {
@@ -173,7 +173,7 @@
             var height= viewport_dims.height;
 
             onmousemove = function (e) {
-                multiplyFilter.update((e.pageX - (width/2)) / 300, (e.pageY - (height/2)) / 300);
+                multiplyFilter.update((e.pageX - (width/2)) / 500, (e.pageY - (height/2)) / 300);
             }
 
 
