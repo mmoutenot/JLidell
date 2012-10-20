@@ -141,7 +141,8 @@
             });
 
             onmousemove = function (e) {
-                multiplyFilter.update(e.pageX/100, e.pageY/100);
+                var mid = window.innerWidth;
+                multiplyFilter.update(mid - (e.pageX/200), (e.pageY/200));
             }
 
         </script>
