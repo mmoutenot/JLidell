@@ -135,12 +135,6 @@
                         pix[i+2] = multiplyPixels(yellowPixels[i+2], multiplyPixels(bluePixels[i+2], pix[i+2])); // blue
                         // pix[i+3] is alpha channel (ignored)
 
-                        // another check to see if image is still empty
-                        if(i < 5 && !pix[i] && !pix[i+1] && !pix[i+2] && !pix[i+3]) {
-                            canvas.parentNode.removeChild(canvas);
-                            setTimeout(function() { multiplyFilter.init("redImg","blueImg"); }, 500);
-                            return false;
-                        }
                     }
                     // Draw the result on the canvas
                     contextRed.putImageData(redData, 0, 0);
