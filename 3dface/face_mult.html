@@ -209,8 +209,15 @@
             var width = viewport_dims.width;
             var height= viewport_dims.height;
 
+            var mouseStart = -1;
             onmousemove = function (e) {
-                document.getElementById("container").style.backgroundPositionY = e.pageX/20+"px";
+                if(mouseStart == -1){
+                    mouseStart = e.pageX;
+                } else {
+                    document.getElementById("container").style.backgroundPositionY
+                    = mouseStart-e.pageX+"px";
+                }
+
                 multiplyFilter.update((e.pageX - (width/2)) / 200, (e.pageY - (height/2)) / 200);
             }
 
