@@ -156,7 +156,7 @@
 
             onmousemove = function (e) {
                 console.log("mid: " + width/2 + " | " + (width/2)-(e.pageX/200));
-                multiplyFilter.update(mid - (e.pageX/200), (e.pageY/200));
+                multiplyFilter.update((width/2) - (e.pageX/200), (e.pageY/200));
             }
 
 
