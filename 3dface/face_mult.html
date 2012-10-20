@@ -126,7 +126,8 @@
                             draw();
                         } else { // not yet ready
                             console.log("Images not ready");
-                            setTimeout(function() { multiplyFilter.init("redImg", "blueImg"); }, 1000);
+                            setTimeout(function() {
+                                multiplyFilter.init("redImg", "blueImg", "yellowImg"); }, 100);
                         }
                     }
                 }
