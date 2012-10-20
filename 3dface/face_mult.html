@@ -31,6 +31,7 @@
 
         <img src="red_s.png" alt="red_source" id="redImg">
         <img src="blue_s.png" alt="blue_source" id="blueImg">
+        <img src="yellow_s.png" alt="yellow_source" id="yellowImg">
 
         <script>
 
@@ -106,7 +107,7 @@
 
                 //** public functions **//
                 return {
-                    init : function(redId, blueId) {
+                    init : function(redId, blueId, yellowId) {
                         console.log("multiply filter with " + redId + " " + blueId);
                         redImage = document.getElementById(redId);
                         blueImage = document.getElementById(blueId);
@@ -130,7 +131,7 @@
             })();
 
             jQuery(function() {
-                    multiplyFilter.init("redImg", "blueImg");
+                    multiplyFilter.init("redImg", "blueImg", "yellowImg");
             });
 
         </script>
