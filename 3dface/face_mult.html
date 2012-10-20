@@ -11,6 +11,15 @@
                 background-size: 100px 80px;
             }
 
+            #container {
+                width:100%;
+                height:100%;
+                background-color: white;
+                background-image: -webkit-linear-gradient(transparent 50%,
+                rgba(0,0,0,1.0) 50%);
+                background-size: 100px 80px;
+            }
+
             #redCanvas {
                 position:absolute;
                 top:50%;
@@ -46,14 +55,26 @@
                 left:-9999999px;
             }
 
+            h1 {
+                font-size:100px;
+                -webkit-background-clip: text;
+                -moz-background-clip: text;
+                background-clip:text;
+
+                color: transparent;
+            }
+
         </style>
 
     </head>
     <body>
 
-        <img src="red_whitebg_s.png" alt="red_source" id="redImg">
-        <img src="blue_whitebg_s.png" alt="blue_source" id="blueImg">
-        <img src="yellow_whitebg_s.png" alt="yellow_source" id="yellowImg">
+        <div id="container">
+            <h1>JAMIE LIDELL</h1>
+            <img src="red_whitebg_s.png" alt="red_source" id="redImg">
+            <img src="blue_whitebg_s.png" alt="blue_source" id="blueImg">
+            <img src="yellow_whitebg_s.png" alt="yellow_source" id="yellowImg">
+        </div>
 
         <script>
 
