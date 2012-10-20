@@ -209,14 +209,19 @@
             var width = viewport_dims.width;
             var height= viewport_dims.height;
 
-            var mouseStart = -1;
+            var mouseStartX = -1;
+            var mouseStartY = -1;
+            var container = document.getElementById("container");
+            var stripe = document.getElementsByClassName("stripe")[0];
+            var h1 = document.getElementsByClassName("stripe")[1];
             onmousemove = function (e) {
-                if(mouseStart == -1){
-                    mouseStart = e.pageX;
-                } else {
-                    document.getElementById("container").style.backgroundPositionY
-                    = mouseStart-e.pageX+"px";
+                if(mouseStartX == -1){
+                    mouseStartX = e.pageX;
+                    mouseStartY = e.pageY;
                 }
+                container.style.backgroundPositionY = mouseStart-e.pageX+"px";
+                stripe.style.backgroundPositionY = (mouseStart-e.pageY)+"px";
+                h1.style.backgroundPositionY = (mouseStart-e.pageY)+"px";
 
                 multiplyFilter.update((e.pageX - (width/2)) / 200, (e.pageY - (height/2)) / 200);
             }
