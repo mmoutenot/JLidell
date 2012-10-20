@@ -130,6 +130,9 @@
                                 multiplyFilter.init("redImg", "blueImg", "yellowImg"); }, 100);
                         }
                     }
+                    update : function (x, y) {
+                        draw(x,y);
+                    }
                 }
             })();
 
@@ -138,7 +141,7 @@
             });
 
             onmousemove = function (e) {
-                draw(e.pageX/100, e.pageY/100);
+                multiplyFilter.update(e.pageX/100, e.pageY/100);
             }
 
         </script>
