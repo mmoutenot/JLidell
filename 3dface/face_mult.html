@@ -77,7 +77,7 @@
                     bluePixels = blueData.data;
 
                     contextYellow = canvasYellow.getContext('2d');
-                    contextYellow.drawImage(yellowImage, 0, 0);
+                    contextYellow.drawImage(yellowImage, -y, -x);
                     yellowData = contextYellow.getImageData(0,0,w,h);
                     yellowPixels = yellowData.data;
 
