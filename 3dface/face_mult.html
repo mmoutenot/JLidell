@@ -65,7 +65,6 @@
                     var pix;
                     var w = redImage.clientWidth;
                     var h = redImage.clientHeight;
-                    console.log("writing image of (height,width): " + h + " " + w);
                     // get 2d context
                     contextRed = canvasRed.getContext('2d');
                     contextRed.drawImage(redImage, 0, 0);
@@ -110,7 +109,6 @@
                 //** public functions **//
                 return {
                     init : function(redId, blueId, yellowId) {
-                        console.log("multiply filter with " + redId + " " + blueId);
                         redImage = document.getElementById(redId);
                         blueImage = document.getElementById(blueId);
                         yellowImage = document.getElementById(yellowId);
