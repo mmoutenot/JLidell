@@ -61,7 +61,7 @@
                     return canvas;
                 }
 
-                function draw() {
+                function draw(x, y) {
                     var pix;
                     var w = redImage.clientWidth;
                     var h = redImage.clientHeight;
@@ -73,7 +73,7 @@
                     pix = redData.data; // project the blue pixels onto the red pixels
 
                     contextBlue = canvasBlue.getContext('2d');
-                    contextBlue.drawImage(blueImage, 0, 0);
+                    contextBlue.drawImage(blueImage, x, y);
                     blueData = contextBlue.getImageData(0,0,w,h);
                     bluePixels = blueData.data;
 
@@ -116,14 +116,14 @@
                         yellowImage = document.getElementById(yellowId);
 
                         // lauch the draw function as soon as the image is loaded
-                        if(redImage    && redImage.clientWidth > 50  &&
-                           blueImage   && blueImage.clientWidth > 50 &&
-                           yellowImage && yellowImage.clientWidth >50) { // images loaded
+                        if(redImage    && redImage.clientWidth    > 50 &&
+                           blueImage   && blueImage.clientWidth   > 50 &&
+                           yellowImage && yellowImage.clientWidth > 50) { // images loaded
                             console.log("Images ready");
-                            canvasRed = createCanvas(redImage);
-                            canvasBlue = createCanvas(blueImage);
+                            canvasRed    = createCanvas(redImage);
+                            canvasBlue   = createCanvas(blueImage);
                             canvasYellow = createCanvas(yellowImage);
-                            draw();
+                            draw(0,0);
                         } else { // not yet ready
                             console.log("Images not ready");
                             setTimeout(function() {
@@ -136,6 +136,10 @@
             jQuery(function() {
                     multiplyFilter.init("redImg", "blueImg", "yellowImg");
             });
+
+            onmousemove = function (e) {
+                draw(e.pageX/100, e.pageY/100);
+            }
 
         </script>
     </body>
