@@ -17,6 +17,11 @@
                 left:-9999999px;
             }
 
+            #yellowCanvas {
+                position:absolute;
+                left:-9999999px;
+            }
+
             #redImg {
                 position:absolute;
                 left:-9999999px;
@@ -122,8 +127,11 @@
                            yellowImage && yellowImage.clientWidth > 50) { // images loaded
                             console.log("Images ready");
                             canvasRed    = createCanvas(redImage);
+                            canvasRed.setAttribute("id", "redCanvas");
                             canvasBlue   = createCanvas(blueImage);
+                            canvasBlue.setAttribute("id", "blueCanvas");
                             canvasYellow = createCanvas(yellowImage);
+                            canvasYellow.setAttribute("id", "yellowCanvas");
                             draw(0,0);
                         } else { // not yet ready
                             console.log("Images not ready");
