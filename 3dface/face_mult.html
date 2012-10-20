@@ -152,8 +152,8 @@
 
             var viewport_dims = viewport();
             console.log(viewport_dims);
-            var width = viewport_dims['width'];
-            var height= viewport_dims['height'];
+            var width = viewport_dims.width;
+            var height= viewport_dims.height;
 
             onmousemove = function (e) {
                 console.log("mid: " + width/2 + " | " + (width/2)-(e.pageX/200));
