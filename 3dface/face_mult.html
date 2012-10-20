@@ -138,11 +138,27 @@
                     multiplyFilter.init("redImg", "blueImg", "yellowImg");
             });
 
+            function viewport()
+            {
+                var e = window
+                , a = 'inner';
+                if ( !( 'innerWidth' in window ) )
+                {
+                    a = 'client';
+                    e = document.documentElement || document.body;
+                }
+                return { width : e[ a+'Width' ] , height : e[ a+'Height' ] }
+            }
+
+            var viewport_dims = viewport();
+            var width = viewport_dims['width'];
+            var height= viewport_dims['height'];
+
             onmousemove = function (e) {
-                var mid = window.innerWidth;
-                console.log("mid: " + mid + " | " + mid-(e.pageX/200));
+                console.log("mid: " + width/2 + " | " + (width/2)-(e.pageX/200));
                 multiplyFilter.update(mid - (e.pageX/200), (e.pageY/200));
             }
+
 
         </script>
     </body>
