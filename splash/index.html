@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <script type="text/javascript" src="pixastic.custom.js"></script>
+  </head>
+  <body>
+
+    <canvas width="1800px" height="1800px" style="" id="jamieimg">
+
+    <script type="text/javascript">
+      console.log("drawing jamie's face");
+      var canvas = document.getElementById('jamieimg');
+      var context = canvas.getContext('2d');
+
+      var img = new Image();
+      img.onload = function () {
+        context.drawImage(img, 0, 0);
+      };
+      img.src = "jamieface.png";
+      var hue_val = 0;
+
+      function cycleHue () {
+        console.log("hue val: " + hue_val);
+        Pixastic.process(img, "hsl", {hue:hue_val});
+        hue_val = (hue_val + 1);
+        if (hue_val > 180) hue_val = -180;
+      }
+
+      setTimeout(cycleHue, 100);
+    </script>
+
+  </body>
+</html>
