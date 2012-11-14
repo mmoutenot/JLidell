@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+  <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+      <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+        <head>
+          <meta charset="utf-8" />
+
+          <!-- Set the viewport width to device width for mobile -->
+          <meta name="viewport" content="width=device-width" />
+
+          <title>Jamie Lidell</title>
+
+          <!-- Included CSS Files (Uncompressed) -->
+          <!--
+          <link rel="stylesheet" href="stylesheets/foundation.css">
+          -->
+
+          <!-- Included CSS Files (Compressed) -->
+          <link rel="stylesheet" href="stylesheets/foundation.min.css">
+          <link rel="stylesheet" href="stylesheets/app.css">
+
+          <script src="javascripts/modernizr.foundation.js"></script>
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+          <script src="javascripts/jquery.syncheight.js"></script>
+          <script src="javascripts/jquery-swapsies.js" type="text/javascript"></script>
+          <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+
+          <!-- IE Fix for HTML5 Tags -->
+          <!--[if lt IE 9]>
+          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+          <![endif]-->
+
+          <script type="text/javascript">
+            var ytplayer = null;
+            function onYouTubePlayerReady(playerId) {
+              console.log('player ready');
+              ytplayer = document.getElementById("youtubevideo");
+              ytplayer.addEventListener("onStateChange", "player_state_changed");
+            }
+          </script>
+
+          <script type="text/javascript">
+            $(window).load(function(){
+                $('.content').syncHeight({ 'updateOnResize': true});
+              });
+          </script>
+
+          <script type="text/javascript">
+            var switchCount = 0;
+
+            $(document).ready(function() {
+                $(".swap").click(function() { swap(); });
+              });
+
+
+            function swap() {
+              switchCount += 1;
+
+              console.log("swapping");
+
+              var album_cover = $('#albumcover');
+              var video = $('#video');
+
+              var album_div = album_cover.parent().html();
+              var video_div = video.parent().html();
+
+              $('#albumcover').parent().fadeOut(500, function() {
+                album_cover.parent().empty().append(video_div);
+              });
+              $('#albumcover').parent().fadeIn(500, function() {
+              });
+
+              $('#video').parent().fadeOut(500, function() {
+                video.parent().empty().append(album_div);
+                if (switchCount % 2 == 0){
+                  $('#jamieimg').css('margin-top', '0%');
+                  $('#youtubevideo').css('margin-top', '50%');
+                } else {
+                  $('#jamieimg').css('margin-top', '40%');
+                  $('#youtubevideo').css('margin-top', '10%');
+                }
+                if (switchCount % 2 == 0){
+                  $('object').css({height: '200px'}, 300);
+                } else {
+                  $('object').css({height: '400px'}, 300);
+                }
+              });
+              $('#video').parent().fadeIn(500, function() {
+                });
+            }
+
+
+            function player_state_changed(state) {
+              console.log("in state changed");
+              /* This event is fired whenever the player's state changes.
+                 Possible values are:
+                 - unstarted (-1)
+                 - ended (0)
+                 - playing (1)
+                 - paused (2)
+                 - buffering (3)
+                 - video cued (5).
+                 When the SWF is first loaded it will broadcast an unstarted (-1) event.
+                 When the video is cued and ready to play it will broadcast a video cued event (5).
+               */
+
+              if (state == 1 || state == 2) {
+                console.log("state changed");
+                swap();
+                  if (ytplayer) {
+                    ytplayer.playVideo();
+                  }
+              }
+            }
+
+        </script>
+
+<style>
+
+  .row{
+    width:80%;
+  }
+
+  h1, h2, h3, li{
+    text-align:center;
+    font-family:"Futura Medium", Futura, Arial, serif;
+    color:#949494;
+  }
+
+  #download{
+    border-top:solid;
+    border-bottom:solid;
+    border-width:1px;
+    height:25%;
+    padding-top:20px;
+    padding-bottom:20px;
+    margin-top:60%;
+  }
+
+  #navlist{
+    text-align:center;
+  }
+
+  #navlist li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+    font-size:x-large;
+  }
+
+  #logo {
+    height:138px;
+    text-align:center;
+  }
+
+  #youtubevideo{
+    margin-top:58%;
+    height:200px;
+    width:100%;
+  }
+
+
+</style>
+
+</head>
+
+<body>
+  <div class="row">
+    <div class="twelve columns centered">
+      <div id="logo">
+        <img src="images/header_s.png">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="five columns centered">
+      <h2 class="swap">New Album Feb 18</h2>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="three columns content swap">
+      <div id="video">
+        <div id="youtubevideo"></div>
+      </div>
+    </div>
+
+    <div class="six columns content">
+      <div id="albumcover">
+        <img src="images/jamieface.png" id="jamieimg">
+      </div>
+    </div>
+
+    <div class="three columns content">
+      <div id="download">
+        <h3>What A Shame - Single</h3>
+        <p style="margin:15px 0 0 0;">Free download - sign-up below</p>
+        <div style="width:100%; height:45px; padding-left:3px; background-image:url(images/ajax-loader.gif); background-repeat: no-repeat; background-position:center center;">
+          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="embed.html" width="279" height="45"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="six columns centered">
+        <div id="preorderlist">
+          <ul id="navlist">
+            <li>Preorder</li>
+            <li>iTunes</li>
+            <li>Bleep</li>
+            <li>Amazon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script type="text/javascript">
+    console.log('loading youtube video');
+
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "youtubevideo" };
+    swfobject.embedSWF("http://www.youtube.com/v/3wPK3VIeT8I?enablejsapi=1&playerapiid=ytplayer&version=3",
+                           "youtubevideo", "400", "400", "8", null, null, params, atts);
+
+  </script>
+
+  <script type="text/javascript">
+    var hue_val = 0;
+    $('#jamieimg').bind('mouseenter', function() {
+        console.log("ENTER");
+        this.iid = setInterval(function() {
+          console.log(hue_val);
+          $("#jamieimg").css("-webkit-filter","hue-rotate("+hue_val+"deg)");
+          $("#jamieimg").css("-moz-filter","hue-rotate("+hue_val+"deg)");
+          $("#jamieimg").css("-o-filter","hue-rotate("+hue_val+"deg)");
+          $("#jamieimg").css("-ms-filter","hue-rotate("+hue_val+"deg)");
+          $("#jamieimg").css("filter","hue-rotate("+hue_val+"deg)");
+          hue_val = (hue_val + 8);
+          }, 10);
+        }).bind('mouseleave', function(){
+          this.iid && clearInterval(this.iid);
+        });
+  </script>
+
+</body>
+
