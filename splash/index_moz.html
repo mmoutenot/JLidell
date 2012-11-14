@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="pixastic.custom.js"></script>
+  </head>
+  <body>
+
+    <img src="jamieface.png" id="jamieimg">
+
+    <!-- <canvas width="1000px" height="1000px" id="jamiecanv"> -->
+    <script type="text/javascript">
+      var hue_val = 30;
+      var iid = null;
+
+      // var canvas = document.getElementById('jamiecanv');
+      // var context = canvas.getContext('2d');
+      // var imageObj = new Image();
+
+      // imageObj.onload = function() {
+      //   context.drawImage(imageObj, 0, 0);
+      // };
+      // imageObj.src = "jamieface.png"
+      $('#jamieimg').live({
+        mouseenter:
+          function() {
+            console.log("Mouse in");
+            if ( !iid ){
+              this._iid = setInterval(function() {
+                  console.log(hue_val);
+
+                  Pixastic.process(document.getElementById('jamieimg'), "hsl", {
+                    hue : hue_val
+                    // saturation : 0,
+                    // lightness : 0
+                  });
+
+                  // hue_val = (hue_val + 1);
+              }, 100);
+
+              iid = this._iid;
+            }
+          },
+        mouseleave:
+          function() {
+            console.log("Mouse out");
+            iid && clearInterval(iid);
+            iid = null;
+          }
+
+      });
+      // $('#jamieimg').live('mouseleave', function(){
+      //       console.log("Mouse out");
+      //       g_iid && clearInterval(g_iid);
+      //     });
+    </script>
+
+  </body>
+</html>
