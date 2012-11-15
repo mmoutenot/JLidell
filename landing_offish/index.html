@@ -22,11 +22,28 @@
           <link rel="stylesheet" href="stylesheets/foundation.min.css">
           <link rel="stylesheet" href="stylesheets/app.css">
 
-          <script src="javascripts/modernizr.foundation.js"></script>
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
           <script src="javascripts/jquery.syncheight.js"></script>
           <script src="javascripts/jquery-swapsies.js" type="text/javascript"></script>
           <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+          <script src="javascripts/pixastic.custom.js"></script>
+          <script src="javascripts/app.js"></script>
+          <script src="javascripts/fondation.min.js"></script>
+          <script src="javascripts/jquery.foundation.alerts.js"></script>
+          <script src="javascripts/jquery.foundation.buttons.js"></script>
+          <script src="javascripts/jquery.foundation.clearing.js"></script>
+          <script src="javascripts/jquery.foundation.forms.js"></script>
+          <script src="javascripts/jquery.foundation.joyride.js"></script>
+          <script src="javascripts/jquery.foundation.magellan.js"></script>
+          <script src="javascripts/jquery.foundation.mediaQueryToggle.js"></script>
+          <script src="javascripts/jquery.foundation.navigation.js"></script>
+          <script src="javascripts/jquery.foundation.orbit.js"></script>
+          <script src="javascripts/jquery.foundation.reveal.js"></script>
+          <script src="javascripts/jquery.foundation.tabs.js"></script>
+          <script src="javascripts/jquery.foundation.tooltips.js"></script>
+          <script src="javascripts/jquery.foundation.topbar.js"></script>
+          <script src="javascripts/jquery.placeholder.js"></script>
+          <script src="javascripts/modernizr.foundation.js"></script>
 
           <!-- IE Fix for HTML5 Tags -->
           <!--[if lt IE 9]>
@@ -34,29 +51,49 @@
           <![endif]-->
 
           <script type="text/javascript">
-            var ytplayer = null;
-            function onYouTubePlayerReady(playerId) {
-              console.log('player ready');
-              ytplayer = document.getElementById("youtubevideo");
-              ytplayer.addEventListener("onStateChange", "player_state_changed");
+            $(window).load(function(){
+                // $('.content').syncHeight({ 'updateOnResize': true});
+
+                // decide which face shift to use
+              });
+
+            function isPropertySupported(property)
+            {
+              return property in document.body.style;
             }
           </script>
 
           <script type="text/javascript">
-            $(window).load(function(){
-                $('.content').syncHeight({ 'updateOnResize': true});
-              });
-          </script>
-
-          <script type="text/javascript">
             var switchCount = 0;
+            var ytplayer = null;
 
             $(document).ready(function() {
-                $(".swap").click(function() { swap(); });
+                $(".swap").live('click', function() { swap(false); });
+
+                $('#teaser').click(function(){
+                    console.log('teaser');
+                    if(ytplayer)
+                      ytplayer.loadVideoById("3wPK3VIeT8I", 0, "large");
+                  });
+                $('#fullSong').click(function(){
+                    console.log('full song');
+                    if(ytplayer)
+                      ytplayer.loadVideoById("WQxGnSqxTyA", 0, "large");
+                  });
+
               });
 
+            /*
+            var inSwap = false;
 
-            function swap() {
+
+            function swap(playAuto) {
+
+              if ($('#video').parent().is(':animated')) {
+                console.log("already being swapped fuck!");
+                return;
+              }
+
               switchCount += 1;
 
               console.log("swapping");
@@ -78,9 +115,11 @@
                 if (switchCount % 2 == 0){
                   $('#jamieimg').css('margin-top', '0%');
                   $('#youtubevideo').css('margin-top', '50%');
+                  $('#download').animate({marginTop:'60%'},600);
                 } else {
-                  $('#jamieimg').css('margin-top', '40%');
+                  $('#jamieimg').css('margin-top', '50px');
                   $('#youtubevideo').css('margin-top', '10%');
+                  $('#download').animate({marginTop:'22%'},600);
                 }
                 if (switchCount % 2 == 0){
                   $('object').css({height: '200px'}, 300);
@@ -90,7 +129,12 @@
               });
               $('#video').parent().fadeIn(500, function() {
                 });
-            }
+              if (playAuto && ytplayer){
+                console.log("playing automatically");
+                ytplayer.playVideo();
+              }
+              }
+              */
 
 
             function player_state_changed(state) {
@@ -107,13 +151,22 @@
                  When the video is cued and ready to play it will broadcast a video cued event (5).
                */
 
-              if (state == 1 || state == 2) {
-                console.log("state changed");
-                swap();
-                  if (ytplayer) {
-                    ytplayer.playVideo();
-                  }
+              if (state == 1) {
+                console.log("state changed with " + switchCount);
+                if (switchCount % 2 == 0){
+                  console.log("pausing video and swapping");
+                  // ytplayer.pauseVideo();
+                  // swap(true);
+                }
               }
+            }
+
+            function onYouTubePlayerReady(playerId) {
+              console.log('player ready');
+              ytplayer = document.getElementById("youtubevideo");
+              ytplayer.addEventListener("onStateChange", "player_state_changed");
+              if (switchCount % 2 != 0 && ytplayer)
+                ytplayer.playVideo();
             }
 
         </script>
@@ -122,12 +175,15 @@
 
   .row{
     width:80%;
+    max-width:1424px;
   }
 
-  h1, h2, h3, li{
+  h1, h2, h3, h4, li{
     text-align:center;
     font-family:"Futura Medium", Futura, Arial, serif;
-    color:#949494;
+    color:#cccccc;
+    font-style:normal;
+    font-weight:normal;
   }
 
   #download{
@@ -138,17 +194,30 @@
     padding-top:20px;
     padding-bottom:20px;
     margin-top:60%;
+    min-width:225px;
   }
 
   #navlist{
     text-align:center;
   }
 
+  #navlist img {
+    padding-right:10px;
+  }
+
   #navlist li {
     display: inline;
     list-style-type: none;
-    padding-right: 20px;
+    padding-right:10px;
     font-size:x-large;
+  }
+
+  a{
+    color:#cccccc;
+  }
+
+  a:hover {
+    color:#ff3366;
   }
 
   #logo {
@@ -162,6 +231,36 @@
     width:100%;
   }
 
+  .videoSwitcher {
+    /* text-align:center; */
+    width:100%;
+  }
+
+  .videoSwitcher .vid{
+    font-family:"Futura Medium", Futura, Arial, serif;
+    color:#cccccc;
+    font-size:large;
+  }
+
+  .videoSwitcher .vid:hover{
+    color:#ff3366;
+  }
+
+  .videoLink {
+    padding:0px;
+    text-align:center;
+  }
+
+  p {
+    font-family:"Futura Medium", Futura, Arial, serif;
+    color:#cccccc;
+    font-size:small;
+  }
+
+  #albumcover{
+    text-align:center;
+  }
+
 
 </style>
 
@@ -169,35 +268,49 @@
 
 <body>
   <div class="row">
-    <div class="twelve columns centered">
+    <div class="twelve columns centered end">
       <div id="logo">
         <img src="images/header_s.png">
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="five columns centered">
-      <h2 class="swap">New Album Feb 18</h2>
+  <div class="row" style="margin-top:-15px">
+    <div class="five columns centered end">
+      <h2>NEW ALBUM FEB 18</h2>
     </div>
   </div>
   <div class="row">
-
-    <div class="three columns content swap">
-      <div id="video">
-        <div id="youtubevideo"></div>
-      </div>
-    </div>
-
-    <div class="six columns content">
-      <div id="albumcover">
-        <img src="images/jamieface.png" id="jamieimg">
-      </div>
-    </div>
-
     <div class="three columns content">
+      <div class = "row">
+        <div id="video" class="hide-for-small">
+          <div id="youtubevideo"></div>
+        </div>
+        <div class="show-for-small">
+          <iframe width="560" height="315" src="http://www.youtube.com/embed/3wPK3VIeT8I" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="http://www.youtube.com/embed/WQxGnSqxTyA" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="row videoSwitcher hide-for-small">
+        <div class="six columns videoLink">
+          <div id="teaser" class="vid">TRAILER</div>
+          <p>DIRECTED BY FLAT E</p>
+        </div>
+        <div class="six columns end videoLink">
+          <div id="fullSong" class="vid">FULL SONG</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="six columns content hide-for-small">
+      <div id="albumcover">
+        <img src="images/jamieface.png" id="jamieimg" class="swap">
+      </div>
+    </div>
+
+    <div class="three columns content end hide-for-small">
       <div id="download">
-        <h3>What A Shame - Single</h3>
-        <p style="margin:15px 0 0 0;">Free download - sign-up below</p>
+        <h3>WHAT A SHAME - SINGLE</h3>
+        <p style="margin:15px 0 0 0;">FREE DOWNLOAD - SIGN-UP</p>
         <div style="width:100%; height:45px; padding-left:3px; background-image:url(images/ajax-loader.gif); background-repeat: no-repeat; background-position:center center;">
           <iframe allowtransparency="true" frameborder="0" scrolling="no" src="embed.html" width="279" height="45"></iframe>
         </div>
@@ -205,17 +318,35 @@
     </div>
   </div>
 
-    <div class="row">
-      <div class="six columns centered">
+    <div class="row hide-for-small">
+      <div class="six columns centered end">
         <div id="preorderlist">
           <ul id="navlist">
-            <li>Preorder</li>
-            <li>iTunes</li>
-            <li>Bleep</li>
-            <li>Amazon</li>
+            <li>PREORDER</li>
+            <img src="images/redDiamond.jpg" width="30px">
+            <!-- <li><a href="" target="_blank">ITUNES</a></li> -->
+            <li><a href="http://glnk.it/1rl" target="_blank">BLEEP</a></li> <img src = "images/greenTriangle.jpg" width="50px">
+            <!-- <li><a href="" target="_blank">AMAZON</a></li> -->
           </ul>
         </div>
       </div>
+    </div>
+
+    <div class="row hide-for-small">
+      <div class="five columns centered" style="text-align:center">
+        <h4>SHARE ON <a href="https://www.facebook.com/sharer/sharer.php?u=http://jamielidell.com">FACEBOOK</a> OR <a href="https://twitter.com/intent/tweet?text=New+%40Jamie_Lidell+album+announced+on+%40WarpRecords+http%3A%2F%2Fjamielidell.com">TWITTER</a><h4>
+      </div>
+    </div>
+
+    <div class="row hide-for-small">
+      <div class="five columns"></div>
+      <div class="one column" style="">
+        <iframe src="http://www.facebook.com/plugins/like.php?href=http://jamielidell.com&amp;layout=button_count&amp;show_faces=false&amp;width=49&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=23" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:47px; height:23px;" allowtransparency="true"></iframe>
+      </div>
+      <div class="one column" style="margin-left:-20px;">
+        <iframe allowtransparency="true" src="http://platform.twitter.com/widgets/follow_button.html?screen_name=Jamie_Lidell&amp;link_color=0080ff&amp;show_count=false" style="width: 160px; height: 20px;" frameborder="0" scrolling="no"></iframe>
+      </div>
+      <div class="five columns end"></div>
     </div>
 
 
@@ -223,7 +354,7 @@
   <script type="text/javascript">
     console.log('loading youtube video');
 
-    var params = { allowScriptAccess: "always" };
+    var params = { allowScriptAccess: "always", allowFullScreen: "true" };
     var atts = { id: "youtubevideo" };
     swfobject.embedSWF("http://www.youtube.com/v/3wPK3VIeT8I?enablejsapi=1&playerapiid=ytplayer&version=3",
                            "youtubevideo", "400", "400", "8", null, null, params, atts);
@@ -232,20 +363,67 @@
 
   <script type="text/javascript">
     var hue_val = 0;
-    $('#jamieimg').bind('mouseenter', function() {
-        console.log("ENTER");
-        this.iid = setInterval(function() {
-          console.log(hue_val);
-          $("#jamieimg").css("-webkit-filter","hue-rotate("+hue_val+"deg)");
-          $("#jamieimg").css("-moz-filter","hue-rotate("+hue_val+"deg)");
-          $("#jamieimg").css("-o-filter","hue-rotate("+hue_val+"deg)");
-          $("#jamieimg").css("-ms-filter","hue-rotate("+hue_val+"deg)");
-          $("#jamieimg").css("filter","hue-rotate("+hue_val+"deg)");
-          hue_val = (hue_val + 8);
-          }, 10);
-        }).bind('mouseleave', function(){
-          this.iid && clearInterval(this.iid);
+    var iid = null;
+
+    if ( $.browser.webkit ) {
+      $('#albumcover').live('mouseenter', function() {
+          this.iid = setInterval(function() {
+            $("#jamieimg").css("-webkit-filter","hue-rotate("+hue_val+"deg)");
+            $("#jamieimg").css("-moz-filter","hue-rotate("+hue_val+"deg)");
+            $("#jamieimg").css("-o-filter","hue-rotate("+hue_val+"deg)");
+            $("#jamieimg").css("-ms-filter","hue-rotate("+hue_val+"deg)");
+            $("#jamieimg").css("filter","hue-rotate("+hue_val+"deg)");
+            hue_val = (hue_val + 8);
+            }, 10);
+          }).live('mouseout', function(){
+            this.iid && clearInterval(this.iid);
+            }).live('click', function(){
+              this.iid && clearInterval(this.iid)
+              });
+
+    } else {
+
+      $('#albumcover').live('mousemove', function() {
+        Pixastic.process(document.getElementById('jamieimg'), "hsl", {
+          hue : 10
+          // saturation : 0,
+          // lightness : 0
         });
+      });
+
+
+//
+//       $('#albumcover').live({
+//         mouseenter:
+//           function() {
+//             console.log("Mouse in");
+//             if ( !iid ){
+//               this._iid = setInterval(function() {
+//                   console.log(hue_val);
+//
+//                   Pixastic.process(document.getElementById('jamieimg'), "hsl", {
+//                     hue : 40
+//                     // saturation : 0,
+//                     // lightness : 0
+//                   });
+//
+//                   // hue_val = (hue_val + 1);
+//               }, 150);
+//
+//               iid = this._iid;
+//             }
+//           },
+//         mouseleave:
+//           function() {
+//             console.log("Mouse out");
+//             iid && clearInterval(iid);
+//             iid = null;
+//           }
+//       });
+
+    }
+
+
   </script>
 
 </body>
