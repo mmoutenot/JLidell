@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 
+
+<!--Code by Marshall Moutenot 2012-->
+<!--http://pewpewlasers.com-->
+
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
   <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
     <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -68,7 +72,7 @@
             var ytplayer = null;
 
             $(document).ready(function() {
-                $(".swap").live('click', function() { swap(false); });
+                // $(".swap").live('click', function() { swap(false); });
 
                 $('#teaser').click(function(){
                     console.log('teaser');
@@ -175,15 +179,47 @@
 
   .row{
     width:80%;
-    max-width:1424px;
+    max-width:1624px;
   }
 
   h1, h2, h3, h4, li{
     text-align:center;
     font-family:"Futura Medium", Futura, Arial, serif;
-    color:#cccccc;
+    color:#777777;
     font-style:normal;
     font-weight:normal;
+  }
+
+  #leftbar {
+    margin-right:30px;
+  }
+
+  #livedates {
+    margin-top:5%;
+  }
+
+  #livedates ul {
+    list-style-type: none;
+  }
+
+  #livedates ul li{
+    text-align:left;
+    white-space:nowrap;
+  }
+
+  .ticket {
+    color:#ff3366;
+  }
+
+  .ticket:hover{
+    color:#cccccc;
+  }
+
+  .livedatemonth{
+    font-size:larger;
+    font-family:"Futura Medium", Futura, Arial, serif;
+    color:#777777;
+    text-align:left;
   }
 
   #download{
@@ -193,8 +229,12 @@
     height:25%;
     padding-top:20px;
     padding-bottom:20px;
-    margin-top:60%;
+    margin-top:40%;
     min-width:225px;
+  }
+
+  #flate {
+    min-width:123px
   }
 
   #navlist{
@@ -226,7 +266,7 @@
   }
 
   #youtubevideo{
-    margin-top:58%;
+    margin-top:20px;
     height:200px;
     width:100%;
   }
@@ -257,9 +297,14 @@
     font-size:small;
   }
 
-  #albumcover{
+  #albumcover {
     text-align:center;
   }
+
+  #jamieimg {
+    width:100%;
+  }
+
 
 
 </style>
@@ -281,24 +326,45 @@
   </div>
   <div class="row">
     <div class="three columns content">
-      <div class = "row">
-        <div id="video" class="hide-for-small">
-          <div id="youtubevideo"></div>
+      <div id="leftbar">
+
+        <div class="row">
+
+          <div id="download">
+            <h3>WHAT A SHAME - SINGLE</h3>
+            <p style="margin:15px 0 0 0;">FREE DOWNLOAD - SIGN-UP</p>
+            <div style="width:100%; height:45px; padding-left:3px; background-image:url(images/ajax-loader.gif); background-repeat: no-repeat; background-position:center center;">
+              <iframe allowtransparency="true" frameborder="0" scrolling="no" src="embed.html" width="279" height="45"></iframe>
+            </div>
+          </div>
+
         </div>
-        <div class="show-for-small">
-          <iframe width="560" height="315" src="http://www.youtube.com/embed/3wPK3VIeT8I" frameborder="0" allowfullscreen></iframe>
-          <iframe width="560" height="315" src="http://www.youtube.com/embed/WQxGnSqxTyA" frameborder="0" allowfullscreen></iframe>
+
+        <div class = "row">
+          <div class = "row">
+            <div id="video" class="hide-for-small">
+              <div id="youtubevideo"></div>
+            </div>
+            <div class="show-for-small">
+              <iframe width="560" height="315" src="http://www.youtube.com/embed/3wPK3VIeT8I" frameborder="0" allowfullscreen></iframe>
+              <iframe width="560" height="315" src="http://www.youtube.com/embed/WQxGnSqxTyA" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="row videoSwitcher hide-for-small">
+            <div class="six columns videoLink">
+              <div id="teaser" class="vid">TRAILER</div>
+              <p id="flate">DIRECTED BY FLAT E</p>
+            </div>
+            <div class="six columns end videoLink">
+              <div id="fullSong" class="vid">FULL SONG</div>
+            </div>
+          </div>
+
         </div>
+
       </div>
-      <div class="row videoSwitcher hide-for-small">
-        <div class="six columns videoLink">
-          <div id="teaser" class="vid">TRAILER</div>
-          <p>DIRECTED BY FLAT E</p>
-        </div>
-        <div class="six columns end videoLink">
-          <div id="fullSong" class="vid">FULL SONG</div>
-        </div>
-      </div>
+
     </div>
 
     <div class="six columns content hide-for-small">
@@ -308,12 +374,37 @@
     </div>
 
     <div class="three columns content end hide-for-small">
-      <div id="download">
-        <h3>WHAT A SHAME - SINGLE</h3>
-        <p style="margin:15px 0 0 0;">FREE DOWNLOAD - SIGN-UP</p>
-        <div style="width:100%; height:45px; padding-left:3px; background-image:url(images/ajax-loader.gif); background-repeat: no-repeat; background-position:center center;">
-          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="embed.html" width="279" height="45"></iframe>
-        </div>
+      <div id="livedates">
+        <h3 style="text-align:left">Live Dates</h3>
+        <div class="livedatemonth">March</div>
+        <ul>
+          <li>08 London, EN, Heaven <a class="ticket">Tickets</a></li>
+          <li>13 Amsterdam, ND, Paradiso <a class="ticket">Tickets</a></li>
+          <li>15 Paris, FR, Gaite Lyrique <a class="ticket">Tickets</a></li>
+            <li>16 Cologne, DE, Stollwerk <a class="ticket">Tickets</a></li>
+            <li>17 Brussells, BE, AB <a class="ticket">Tickets</a></li>
+            <li>19 Hamburg, DE, Gruenspan <a class="ticket">Tickets</a></li>
+            <li>20 Berlin, DE, Kesselhaus <a class="ticket">Tickets</a></li>
+            <li>21 Munich, DE, Ampere <a class="ticket">Tickets</a></li>
+            <li>22 Zurich, CH, M4 Music <a class="ticket">Tickets</a></li>
+            <li>23 Instanbul, TR, Salon Iksv <a class="ticket">Tickets</a></li>
+            <li>28 Las Angeles, CA, Echoplex <a class="ticket">Tickets</a></li>
+            <li>29 San Francisco, CA, The Independent <a class="ticket">Tickets</a></li>
+            <li>30 Portland, OR, Doug Fir Lounge <a class="ticket">Tickets</a></li>
+          </ul>
+          <div class="livedatemonth">April</div>
+          <ul>
+            <li>01 Seattle, WA, Neumos <a class="ticket">Tickets</a></li>
+            <li>02 Vancouver, BC, Fortune Sound Club <a class="ticket">Tickets</a></li>
+            <li>05 Minneapolis, MN, Fine Line Music Cafe <a class="ticket">Tickets</a></li>
+            <li>06 Chicago, IL, Lincoln Hall <a class="ticket">Tickets</a></li>
+            <li>08 Toronto, ON, Lee's Palace <a class="ticket">Tickets</a></li>
+            <li>09 Montreal, QC, Cabaret Mile End <a class="ticket">Tickets</a></li>
+            <li>11 Boston, MA, Brighton Music Hall <a class="ticket">Tickets</a></li>
+            <li>12 Washington, DC, Rock N Roll Hotel <a class="ticket">Tickets</a></li>
+            <li>13 Brooklyn, NY, Music Hall of Williamsburg <a class="ticket">Tickets</a></li>
+            <li>14 Philadelphia, PA, Union Transfer <a class="ticket">Tickets</a></li>
+          </ul>
       </div>
     </div>
   </div>
@@ -377,15 +468,19 @@
             }, 10);
           }).live('mouseout', function(){
             this.iid && clearInterval(this.iid);
-            }).live('click', function(){
-              this.iid && clearInterval(this.iid)
-              });
+            });
+      $('#albumcover').live('mousedown', function(){
+          console.log('clicked');
+          this.iid && clearInterval(this.iid)
+          $("#jamieimg").attr("src", "images/gif-wireframe-rotate-illusion.gif");
+        }).live('mouseup', function() {
+          $("#jamieimg").attr("src", "images/jamieface.png");
+        });
 
     } else {
 
       $('#albumcover').live('mousemove', function() {
         Pixastic.process(document.getElementById('jamieimg'), "hsl", {
-          hue : 10
           // saturation : 0,
           // lightness : 0
         });
